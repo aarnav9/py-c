@@ -10,6 +10,6 @@ output.cpp: Translated code
 
 Commands
 
-run python3 python-c.py
+python3 python-c.py
 
 clang++ -std=c++17 output.cpp -o test && ./test
