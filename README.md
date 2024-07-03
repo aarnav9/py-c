@@ -1,4 +1,4 @@
-Layout
+##Layout
 
 input.py: Python code
 
@@ -8,7 +8,7 @@ test-oj.cpp: Python functionality and typing in C++
 
 output.cpp: Translated code
 
-Commands
+##Commands
 
 python3 python-c.py
 
