@@ -19,7 +19,7 @@ Functionality
 Currently only supports types int, float, char, string with operations +, -, *, /, if, else. This means any functions running these will work including recursive calls and powerful nested functions.
 
 Examples
-```
+```Python
 def rec_add(a, b):
 	if a == 0:
 		return 0
