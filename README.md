@@ -72,6 +72,30 @@ def nested(a, b):
 		else:
 			return b
 
+def abs(n):
+	if n < 0:
+		return n * 1
+	else:
+		return n
+
+def fib_next(n):
+	if n < 0:
+		return 0
+	else:
+		return "hello"
+
+def mult(a, b):
+	return a*b
+
+def test_lists():
+    my_list = [1, 2, 3]
+    my_list.append(4)
+    my_list.append("hi")
+    print(my_list)
+    print(my_list[2])
+    my_list.append([1, 2, 3])
+    print(my_list)
+
 def main():
 	print(rec_add(5, 5))
 	print(add(5, 5, 5))
@@ -84,6 +108,9 @@ def main():
 	print(divide(10, 0))
 	print(divide(10, 3))
 	print(nested(5, 10))
+	print(fib_next(10))
+	print(mult("hi",3))
+	test_lists()
 ```
 
 The output C++ code for the function above
@@ -93,8 +120,8 @@ The output C++ code for the function above
 #include <string>
 #include <variant>
 #include <stdexcept>
-// Include test.cpp functionality
-#include "test-oj.cpp"
+// Include PY.cpp functionality
+#include "PY2.cpp"
 
 PY_OJ rec_add(PY_OJ a, PY_OJ b) {
   if (PY_COMPARE(a, std::equal_to<>(), PY_OJ(0))) {
@@ -165,6 +192,34 @@ PY_OJ nested(PY_OJ a, PY_OJ b) {
     }
   }
 }
+PY_OJ abs(PY_OJ n) {
+  if (PY_COMPARE(n, std::less<>(), PY_OJ(0))) {
+    return PY_MULT(n, PY_OJ(1));
+  }
+  else {
+    return n;
+  }
+}
+PY_OJ fib_next(PY_OJ n) {
+  if (PY_COMPARE(n, std::less<>(), PY_OJ(0))) {
+    return PY_OJ(0);
+  }
+  else {
+    return PY_OJ("hello");
+  }
+}
+PY_OJ mult(PY_OJ a, PY_OJ b) {
+  return PY_MULT(a, b);
+}
+void test_lists() {
+  auto my_list = PY_OJ({std::vector<PY_OJ>{PY_OJ(1), PY_OJ(2), PY_OJ(3)}});
+  PY_LIST_APPEND(my_list, PY_OJ(4));
+  PY_LIST_APPEND(my_list, PY_OJ("hi"));
+  PY_PRINT(my_list);
+  PY_PRINT(PY_LIST_GET(my_list, PY_OJ(2)));
+  PY_LIST_APPEND(my_list, PY_OJ({std::vector<PY_OJ>{PY_OJ(1), PY_OJ(2), PY_OJ(3)}}));
+  PY_PRINT(my_list);
+}
 void py_main() {
   PY_PRINT(rec_add(PY_OJ(5), PY_OJ(5)));
   PY_PRINT(add(PY_OJ(5), PY_OJ(5), PY_OJ(5)));
@@ -177,6 +232,9 @@ void py_main() {
   PY_PRINT(divide(PY_OJ(10), PY_OJ(0)));
   PY_PRINT(divide(PY_OJ(10), PY_OJ(3)));
   PY_PRINT(nested(PY_OJ(5), PY_OJ(10)));
+  PY_PRINT(fib_next(PY_OJ(10)));
+  PY_PRINT(mult(PY_OJ("hi"), PY_OJ(3)));
+  test_lists();
 }
 int main() {
     py_main();
