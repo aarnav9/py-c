@@ -8,6 +8,12 @@ test-oj.cpp: Python functionality and typing in C++
 
 output.cpp: Translated code
 
+### More Funtionality but unstable
+
+PY2-CPP.py: Lexer, Parser, Transpiler
+
+PY2.cpp: Python functionality and typing in C++
+
 ### Commands
 
 python3 python-c.py
