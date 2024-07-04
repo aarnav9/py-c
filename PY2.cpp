@@ -32,6 +32,32 @@ struct PY_OJ {
             delete l;
         }
     }
+
+    PY_OJ(const PY_OJ& other) : active_type(other.active_type) {
+        switch (active_type) {
+            case PY_OJ_Type::INT: i = other.i; break;
+            case PY_OJ_Type::FLOAT: f = other.f; break;
+            case PY_OJ_Type::CHAR: c = other.c; break;
+            case PY_OJ_Type::STRING: s = new std::string(*other.s); break;
+            case PY_OJ_Type::LIST: l = new std::vector<PY_OJ>(*other.l); break;
+        }
+    }
+
+    // Assignment operator
+    PY_OJ& operator=(const PY_OJ& other) {
+        if (this != &other) {
+            this->~PY_OJ(); // Call destructor to free any allocated memory
+            active_type = other.active_type;
+            switch (active_type) {
+                case PY_OJ_Type::INT: i = other.i; break;
+                case PY_OJ_Type::FLOAT: f = other.f; break;
+                case PY_OJ_Type::CHAR: c = other.c; break;
+                case PY_OJ_Type::STRING: s = new std::string(*other.s); break;
+                case PY_OJ_Type::LIST: l = new std::vector<PY_OJ>(*other.l); break;
+            }
+        }
+        return *this;
+    }
 };
 
 std::variant<int, float, char, std::string, std::vector<PY_OJ>> type_inference(const PY_OJ& obj) {
@@ -179,8 +205,45 @@ PY_OJ PY_LIST_APPEND(PY_OJ& list, const PY_OJ& item) {
     if (list.active_type != PY_OJ_Type::LIST) {
         throw std::runtime_error("Append can only be used on lists");
     }
-    list.l->push_back(item);
+    // Create a copy of the item to be appended
+    PY_OJ item_copy;
+    switch (item.active_type) {
+        case PY_OJ_Type::INT:
+            item_copy = PY_OJ(item.i);
+            break;
+        case PY_OJ_Type::FLOAT:
+            item_copy = PY_OJ(item.f);
+            break;
+        case PY_OJ_Type::CHAR:
+            item_copy = PY_OJ(item.c);
+            break;
+        case PY_OJ_Type::STRING:
+            item_copy = PY_OJ(*item.s);
+            break;
+        case PY_OJ_Type::LIST:
+            item_copy = PY_OJ(*item.l);
+            break;
+    }
+    list.l->push_back(item_copy);
     return PY_OJ(); // Return None
+}
+
+// Add this function to PY2.cpp
+PY_OJ PY_LIST_DELETE(PY_OJ& list, const PY_OJ& index) {
+    if (list.active_type != PY_OJ_Type::LIST) {
+        throw std::runtime_error("Delete can only be used on lists");
+    }
+    auto index_value = type_inference(index);
+    if (!std::holds_alternative<int>(index_value)) {
+        throw std::runtime_error("List index must be an integer");
+    }
+    int idx = std::get<int>(index_value);
+    if (idx < 0 || idx >= static_cast<int>(list.l->size())) {
+        throw std::runtime_error("List index out of range");
+    }
+    PY_OJ removed_item = (*list.l)[idx];
+    list.l->erase(list.l->begin() + idx);
+    return removed_item; // Return the removed item, similar to Python's pop()
 }
 
 PY_OJ PY_LIST_GET(const PY_OJ& list, const PY_OJ& index) {

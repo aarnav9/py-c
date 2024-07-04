@@ -88,7 +88,7 @@ class PythonToCConverter(ast.NodeVisitor):
             if isinstance(node.func, ast.Attribute):
                 # Case: my_list.append(4)
                 list_arg = self.visit(node.func.value)
-                item_arg = args
+                item_arg = self.visit(node.args[0])
                 return f'{func}({list_arg}, {item_arg})'
             else:
                 # Case: PY_LIST_APPEND(my_list, 4)
