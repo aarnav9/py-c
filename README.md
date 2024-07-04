@@ -21,30 +21,35 @@ Currently only supports types int, float, char, string with operations +, -, *, 
 ### Examples
 ```Python
 def rec_add(a, b):
-	if a == 0:
-		return 0
-	else:
-		return rec_add((a - 1), b) + b
+    if a == 0:
+        return 0
+    else:
+        return rec_add((a - 1), b) + b
+
 
 def add(a, b, v):
-	return a + b + v
+    return a + b + v
+
 
 def fibonacci(n):
     if n <= 1:
         return n
     else:
-        return fibonacci(n-1) + fibonacci(n-2)
+        return fibonacci(n - 1) + fibonacci(n - 2)
+
 
 def min(a, b):
-	if a < b:
-		return a
-	return b
+    if a < b:
+        return a
+    return b
+
 
 def power(a, b):
-	if b == 0:
-		return 1
-	else:
-		return a * power(a, b - 1)
+    if b == 0:
+        return 1
+    else:
+        return a * power(a, b - 1)
+
 
 def calculate_circle_area(radius):
     pi = 3.14159
@@ -54,38 +59,44 @@ def calculate_circle_area(radius):
         area = pi * radius * radius
         return area
 
+
 def divide(a, b):
-	if b == 0:
-		return 0
-	else:
-		return a / b
+    if b == 0:
+        return 0
+    else:
+        return a / b
+
 
 def nested(a, b):
-	if a < b:
-		if a == 0:
-			return 0
-		else:
-			return min(a, 3)
-	else:
-		if b == 0:
-			return 0
-		else:
-			return b
+    if a < b:
+        if a == 0:
+            return 0
+        else:
+            return min(a, 3)
+    else:
+        if b == 0:
+            return 0
+        else:
+            return b
+
 
 def abs(n):
-	if n < 0:
-		return n * 1
-	else:
-		return n
+    if n < 0:
+        return n * 1
+    else:
+        return n
+
 
 def fib_next(n):
-	if n < 0:
-		return 0
-	else:
-		return "hello"
+    if n < 0:
+        return 0
+    else:
+        return "hello"
+
 
 def mult(a, b):
-	return a*b
+    return a * b
+
 
 def test_lists():
     my_list = [1, 2, 3]
@@ -96,21 +107,22 @@ def test_lists():
     my_list.append([1, 2, 3])
     print(my_list)
 
+
 def main():
-	print(rec_add(5, 5))
-	print(add(5, 5, 5))
-	print(fibonacci(10))
-	print(fibonacci(20))
-	print(min(2, 100000))
-	print(power(2, 5))
-	print(calculate_circle_area(2.5))
-	print(divide(10, 2))
-	print(divide(10, 0))
-	print(divide(10, 3))
-	print(nested(5, 10))
-	print(fib_next(10))
-	print(mult("hi",3))
-	test_lists()
+    print(rec_add(5, 5))
+    print(add(5, 5, 5))
+    print(fibonacci(10))
+    print(fibonacci(20))
+    print(min(2, 100000))
+    print(power(2, 5))
+    print(calculate_circle_area(2.5))
+    print(divide(10, 2))
+    print(divide(10, 0))
+    print(divide(10, 3))
+    print(nested(5, 10))
+    print(fib_next(10))
+    print(mult("hi", 3))
+    test_lists()
 ```
 
 The output C++ code for the function above
