@@ -262,11 +262,11 @@ PY_OJ PY_LIST_GET(const PY_OJ& list, const PY_OJ& index) {
 }
 
 template<typename Op>
-PY_OJ PY_COMPARE(const PY_OJ& a, Op op, const PY_OJ& b) {
+bool PY_COMPARE(const PY_OJ& a, Op op, const PY_OJ& b) {
     auto type_a = type_inference(a);
     auto type_b = type_inference(b);
 
-    return PY_OJ(std::visit([&op](const auto& a, const auto& b) -> int {
+    return std::visit([&op](const auto& a, const auto& b) -> bool {
         using T1 = std::decay_t<decltype(a)>;
         using T2 = std::decay_t<decltype(b)>;
 
@@ -277,7 +277,7 @@ PY_OJ PY_COMPARE(const PY_OJ& a, Op op, const PY_OJ& b) {
         } else {
             throw std::runtime_error("Incompatible types for comparison");
         }
-    }, type_a, type_b));
+    }, type_a, type_b);
 }
 
 bool operator<(const PY_OJ& a, const PY_OJ& b) {
